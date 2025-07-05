@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Year Project Portal - Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Average+Sans&family=Averia+Sans+Libre&family=EB+Garamond:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="left-header">
+      <img src="\logo.png" alt="Christ Logo" class="logo-img" />
+      <div class="logo-text">
+        <strong>CHRIST</strong><br>
+        <span>(DEEMED TO BE UNIVERSITY)</span>
+      </div>
+    </div>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="index.html">Project Submission</a>
+      <a href="assessment.html">Assessment Criteria</a>
+      <a href="facultylogin.html">Faculty Login</a>
+    </nav>
+  </header>
+
+  <main class="landing-main">
+    <h1>Welcome to the<br>Final Year Project Portal</h1>
+    <div class="button-group">
+      <button onclick="studentLogin()">Student Login</button>
+      <button onclick="facultyLogin()">Faculty Login</button>
+    </div>
+  </main>
+
+  <script>
+    function studentLogin() {
+      window.location.href = "index.html";
+    }
+
+    function facultyLogin() {
+      window.location.href = "facultylogin.html";
+    }
+  </script>
+
+</body>
+</html>
