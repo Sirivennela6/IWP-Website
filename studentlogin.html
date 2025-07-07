@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Login - Christ University</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="left-header">
+      <img src="logo.png" alt="University Logo" class="logo-img" />
+      <div class="logo-text">
+        <strong>CHRIST</strong><br />
+        <span>(Deemed to be University)</span>
+      </div>
+    </div>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="index.html">Project Submission</a>
+      <a href="assessment.html">Assessment-Criteria</a>
+      <a href="home.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="form-container">
+  <h2 style="display: flex; align-items: center; font-family: 'EB Garamond', serif;">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135673.png" alt="Login Icon" class="icon">
+    Student Login
+  </h2>
+
+  <form onsubmit="return handleStudentLogin(event)">
+    <label for="studentId">Student ID</label>
+    <input type="text" id="studentId" placeholder="Enter Student ID" required />
+
+    <label for="studentPassword">Password</label>
+    <input type="password" id="studentPassword" placeholder="Enter password" required />
+
+    <button type="submit">Login</button>
+  </form>
+</main>
+
+<script>
+  const studentUsers = {
+    "student1": "stud123",
+    "john.doe": "doe456"
+  };
+
+  function handleStudentLogin(event) {
+    event.preventDefault();
+
+    const id = document.getElementById("studentId").value.trim();
+    const password = document.getElementById("studentPassword").value;
+
+    if (studentUsers[id] === password) {
+      window.location.href = "index.html"; 
+    } else {
+      alert("Invalid student ID or password.");
+    }
+
+    return false;
+  }
+</script>
+
+</body>
+</html>

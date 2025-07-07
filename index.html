@@ -9,7 +9,7 @@
 <body>
   <header>
     <div class="left-header">
-      <img src="\logo.png" alt="CHRIST logo" class="logo-img">
+      <img src="logo.png" alt="CHRIST logo" class="logo-img">
       <div class="logo-text">
         <strong>CHRIST</strong><br>
         <span>(DEEMED TO BE UNIVERSITY)</span>
@@ -17,9 +17,9 @@
     </div>
     <nav>
       <a href="home.html">Home</a>
-      <a href="index.html">Submit Project</a>
-      <a href="assessment.html">Assessment Criteria</a>
-      <a href="facultylogin.html">Login</a>
+      <a href="index.html">Project Submission</a>
+      <a href="assessment.html">Assessment-Criteria</a>
+      <a href="home.html">Login</a>
     </nav>
   </header>
 
@@ -30,6 +30,13 @@
     </h2>
 
     <form id="projectForm">
+      <label for="studentInfo">Name & Reg No</label>
+      <select id="studentInfo" name="studentInfo" required>
+        <option value="">Select student</option>
+        <option value="Siri_2360346">Siri - 2360346</option>
+        <option value="Angel_2360331">Angel - 2360331</option>
+      </select>
+
       <label for="title">Project Title</label>
       <input type="text" id="title" name="title" required />
 
@@ -42,8 +49,6 @@
         <option>Web Development</option>
         <option>AI/ML</option>
         <option>Cybersecurity</option>
-        <option>Data Science</option>
-        <option>IoT</option>
       </select>
 
       <label for="classSection">Class and Section</label>
@@ -51,23 +56,60 @@
         <option value="">Select a class and section</option>
         <option>7BTCS A</option>
         <option>7BTCS B</option>
-        <option>7BTCS C</option>
-        <option>7BTIT A</option>
-        <option>7BTIT B</option>
-        <option>7BTIT C</option>
-        <option>7BTIOT A</option>
-        <option>7BTIOT B</option>
-        <option>7BTIOT C</option>
       </select>
 
       <label for="guide">Guide Name</label>
       <input type="text" id="guide" name="guide" required />
 
       <label for="file">Upload File</label>
-      <input type="file" id="file" name="file" required />
+      <input type="file" id="file" name="file" accept=".pdf,.doc,.docx" required />
 
       <button type="submit">Submit</button>
     </form>
   </main>
+
+  <script>
+    document.getElementById("projectForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const MAX_MB = 4;
+      const MAX_BYTES = MAX_MB * 1024 * 1024;
+
+      const studentInfo = document.getElementById("studentInfo").value.trim();
+      const title = document.getElementById("title").value.trim();
+      const domain = document.getElementById("domain").value.trim();
+      const classSection = document.getElementById("classSection").value.trim();
+      const guide = document.getElementById("guide").value.trim();
+      const fileInput = document.getElementById("file");
+
+      if (!studentInfo || !title || !domain || !classSection || !guide || !fileInput.files.length) {
+        alert("Please fill all fields and upload a file.");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      if (file.size > MAX_BYTES) {
+        alert(`File too large! Upload below ${MAX_MB}MB.`);
+        return;
+      }
+
+      const projectData = {
+        studentInfo,
+        title,
+        domain,
+        classSection,
+        guide,
+        fileName: file.name
+      };
+
+      try {
+        localStorage.setItem("submittedProject", JSON.stringify(projectData));
+        alert("Project submitted successfully!");
+        document.getElementById("projectForm").reset();
+      } catch (err) {
+        alert("Storage error. Try a smaller file.");
+      }
+    });
+  </script>
 </body>
 </html>
