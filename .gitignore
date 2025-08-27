@@ -1,2 +1,2 @@
 .vercel
-".env"      # Add .env to .gitignore file
+.env    

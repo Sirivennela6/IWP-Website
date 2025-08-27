@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "pages/api/upload.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!api|_next|favicon.ico).*)",
+      "destination": "/$1"
+    }
+  ]
+}
