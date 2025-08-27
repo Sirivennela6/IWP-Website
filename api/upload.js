@@ -42,14 +42,6 @@ const upload = multer({
   }
 });
 
-// Export config for Next.js
-// Note: This file should be at /api/upload.js (root level api folder)
-export const config = {
-  api: { 
-    bodyParser: false 
-  }
-};
-
 // Middleware wrapper
 function runMiddleware(req, res, fn) {
   return new Promise((resolve, reject) => {
@@ -60,7 +52,7 @@ function runMiddleware(req, res, fn) {
   });
 }
 
-// Main handler function
+// Main handler function for Vercel
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');

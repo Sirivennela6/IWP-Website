@@ -1,9 +1,15 @@
 {
-  "functions": {
-    "api/upload.js": {
-      "maxDuration": 30
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
@@ -13,5 +19,10 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ]
+  ],
+  "functions": {
+    "api/upload.js": {
+      "maxDuration": 30
+    }
+  }
 }
