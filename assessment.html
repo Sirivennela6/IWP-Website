@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Assessment</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <div class="left-header">
+      <img src="/logo.PNG" alt="Christ Logo" class="logo-img" />
+      <div class="logo-text">
+        <strong>CHRIST</strong><br />
+        <span>(DEEMED TO BE UNIVERSITY)</span>
+      </div>
+    </div>
+    <nav>
+      <a href="facultyDashboard.html">Dashboard</a>
+      <a href="evaluation.html">Evaluation Progress</a>
+      <a href="assessment.html">Assessment Criteria</a>
+      <a href="home.html">Logout</a>
+    </nav>
+  </header>
+
+  <div class="assessment-wrapper">
+    <main class="main-evaluation">
+      <h2>Evaluation Criteria</h2>
+      <ul class="criteria">
+        <li><span>Technical Complexity</span><span>50%</span></li>
+        <li><span>Documentation</span><span>25%</span></li>
+        <li><span>Viva Voce</span><span>25%</span></li>
+      </ul>
+
+      <div class="labels">
+        <span>Proposal</span>
+        <span>Mid-Evaluation</span>
+        <span>Final Evaluation</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" style="width: 25%;"></div>
+      </div>
+
+      <br><br>
+
+      <label for="class">Select Class</label>
+      <select id="class">
+        <option>Select Class</option>
+        <option>7BTCS</option>
+        <option>7BTIT</option>
+      </select>
+
+      <label for="section">Select Section</label>
+      <select id="section">
+        <option>Select Section</option>
+        <option>A</option>
+        <option>B</option>
+      </select>
+
+      <label for="student">Name & Reg No</label>
+      <select id="student">
+        <option>Select student</option>
+        <option value="Siri_2360346">Siri - 2360346</option>
+        <option value="Angel_2360331">Angel - 2360331</option>
+      </select>
+
+      <button onclick="loadFile()">Load File</button>
+
+      <div id="projectDetails" style="margin-top: 20px;"></div>
+    </main>
+
+    <aside class="sidebar" id="sidebar">
+      <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+      <h3>Project File Viewer</h3>
+      <div id="fileViewer">
+        <p style="padding: 10px; font-size: 14px;">
+          * File preview will appear here after loading.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("collapsed");
+    }
+
+    function loadFile() {
+      const selectedStudent = document.getElementById("student").value;
+      const data = JSON.parse(localStorage.getItem("lastSubmission"));
+
+      const details = document.getElementById("projectDetails");
+      const viewer = document.getElementById("fileViewer");
+
+      if (!data || data.studentInfo !== selectedStudent) {
+        details.innerHTML = `<p style="color:red;">No project submission found for selected student.</p>`;
+        viewer.innerHTML = `<p style="padding:10px; font-size: 14px;">* File preview will appear here after loading.</p>`;
+        return;
+      }
+
+      details.innerHTML = `
+        <strong>Submitted Project</strong><br>
+        <b>Student:</b> ${data.studentInfo}<br>
+        <b>Title:</b> ${data.title}<br>
+        <b>Abstract:</b> ${data.abstract}<br>
+        <b>Domain:</b> ${data.domain}<br>
+        <b>Class & Section:</b> ${data.classSection}<br>
+        <b>Guide:</b> ${data.guide}
+      `;
+
+      const fileUrl = data.fileUrl;
+      if (fileUrl.endsWith(".pdf")) {
+        viewer.innerHTML = `<iframe src="${fileUrl}#toolbar=0" width="100%" height="300px" style="border:none;"></iframe>`;
+      } else {
+        viewer.innerHTML = `<a href="${fileUrl}" target="_blank" rel="noopener">Download project file</a>`;
+      }
+    }
+  </script>
+</body>
+</html>

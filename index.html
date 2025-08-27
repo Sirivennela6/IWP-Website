@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Submission</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <div class="left-header">
+      <img src="/logo.PNG" alt="Christ Logo" class="logo-img" />
+      <div class="logo-text">
+        <strong>CHRIST</strong><br />
+        <span>(DEEMED TO BE UNIVERSITY)</span>
+      </div>
+    </div>
+    <nav id="main-nav">
+      <a href="home.html">Home</a>
+      <a href="index.html">Project Submission</a>
+      <a href="guide.html">Guide Info</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main class="form-container">
+    <h2>
+      <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" class="icon" alt="File Icon" />
+      Project Submission
+    </h2>
+
+    <form id="projectForm">
+      <label for="studentInfo">Name & Reg No</label>
+      <select id="studentInfo" name="studentInfo" required>
+        <option value="">Select student</option>
+        <option value="Siri_2360346">Siri - 2360346</option>
+        <option value="Angel_2360331">Angel - 2360331</option>
+      </select>
+
+      <label for="title">Project Title</label>
+      <input type="text" id="title" name="title" placeholder="Enter project title" required />
+
+      <label for="abstract">Abstract</label>
+      <textarea id="abstract" name="abstract" rows="4" placeholder="Project abstract..." required></textarea>
+
+      <label for="domain">Domain</label>
+      <select id="domain" name="domain" required>
+        <option value="">Select a domain</option>
+        <option>Web Development</option>
+        <option>AI/ML</option>
+        <option>Cybersecurity</option>
+        <option>IoT</option>
+        <option>Cloud Computing</option>
+      </select>
+
+      <label for="classSection">Class and Section</label>
+      <select id="classSection" name="classSection" required>
+        <option value="">Select a class and section</option>
+        <option>7BTCS A</option>
+        <option>7BTCS B</option>
+        <option>7BTIT A</option>
+        <option>7BTIT B</option>
+      </select>
+
+      <label for="guide">Guide Name</label>
+      <input type="text" id="guide" name="guide" placeholder="Guide's full name" required />
+
+      <label for="file">Upload Project File (PDF, DOC, DOCX, max 4MB)</label>
+      <input type="file" id="file" name="file" accept=".pdf,.doc,.docx" required />
+
+      <button type="submit">Submit</button>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById("projectForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const MAX_MB = 4;
+      const MAX_BYTES = MAX_MB * 1024 * 1024;
+
+      const studentInfo = this.studentInfo.value.trim();
+      const title = this.title.value.trim();
+      const abstract = this.abstract.value.trim();
+      const domain = this.domain.value.trim();
+      const classSection = this.classSection.value.trim();
+      const guide = this.guide.value.trim();
+      const fileInput = this.file;
+
+      if (!studentInfo || !title || !abstract || !domain || !classSection || !guide || !fileInput.files.length) {
+        alert("Please fill all fields and upload a file.");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      if (file.size > MAX_BYTES) {
+        alert(`File too large! Upload below ${MAX_MB}MB.`);
+        return;
+      }
+
+      const formData = new FormData(this);
+      try {
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        if (res.ok) {
+          alert("Project submitted successfully!");
+
+          // Save submitted data + fileUrl in localStorage for preview on assessment page
+          localStorage.setItem("lastSubmission", JSON.stringify({
+            studentInfo, title, abstract, domain, classSection, guide, fileUrl: data.fileUrl
+          }));
+          this.reset();
+        } else {
+          alert(data.error || "Submission failed.");
+        }
+      } catch (err) {
+        alert("Network error. Please try again later.");
+      }
+    });
+  </script>
+</body>
+</html>

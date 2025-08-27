@@ -43,6 +43,7 @@ const upload = multer({
 });
 
 // Export config for Next.js
+// Note: This file should be at /api/upload.js (root level api folder)
 export const config = {
   api: { 
     bodyParser: false 

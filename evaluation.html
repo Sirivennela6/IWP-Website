@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evaluation Progress</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .eval-container {
+      padding: 40px;
+      text-align: center;
+    }
+
+    canvas {
+      max-width: 700px;
+      margin-top: 30px;
+    }
+
+    h2 {
+      font-family: 'EB Garamond', serif;
+    }
+
+    table {
+      margin: 30px auto;
+      border-collapse: collapse;
+      width: 80%;
+    }
+
+    table, th, td {
+      border: 1px solid #aaa;
+    }
+
+    th, td {
+      padding: 12px;
+      font-size: 15px;
+      font-family: 'Average Sans', sans-serif;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fade-in');
+  });
+</script>
+
+<body>
+
+  <header>
+    <div class="left-header">
+      <img src="/logo.PNG" alt="Christ Logo" class="logo-img" />
+      <div class="logo-text">
+        <strong>CHRIST</strong><br>
+        <span>(DEEMED TO BE UNIVERSITY)</span>
+      </div>
+    </div>
+    <nav>
+      <a href="facultyDashboard.html">Dashboard</a>
+      <a href="assessment.html">Assessment Criteria</a>
+      <a href="evaluation.html">Evaluation Progress</a>
+      <a href="home.html" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main class="eval-container">
+    <h2>Evaluation Progress Overview</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Reg. No</th>
+          <th>Proposal</th>
+          <th>Mid Evaluation</th>
+          <th>Final Evaluation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Siri</td>
+          <td>2360346</td>
+          <td>20</td>
+          <td>23</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>Angel</td>
+          <td>2360331</td>
+          <td>18</td>
+          <td>20</td>
+          <td>22</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <canvas id="evalChart"></canvas>
+  </main>
+
+  <script>
+    // Access control check
+    window.onload = () => {
+      const role = localStorage.getItem("userRole");
+      if (role !== "faculty") {
+        alert("Access denied. Faculty only.");
+        window.location.href = "home.html";
+      }
+    };
+
+    function logout() {
+      localStorage.removeItem("userRole");
+    }
+
+    const ctx = document.getElementById("evalChart").getContext("2d");
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Proposal', 'Mid Evaluation', 'Final Evaluation'],
+        datasets: [
+          {
+            label: 'Siri - 2360346',
+            data: [20, 23, 24],
+            backgroundColor: 'rgba(54, 162, 235, 0.7)'
+          },
+          {
+            label: 'Angel - 2360331',
+            data: [18, 20, 22],
+            backgroundColor: 'rgba(255, 99, 132, 0.7)'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Student Evaluation Scores',
+            font: { size: 18 }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 30
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

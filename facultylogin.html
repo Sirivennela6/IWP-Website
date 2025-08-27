@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Faculty Login</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fade-in');
+  });
+</script>
+
+<body>
+
+  <header>
+    <div class="left-header">
+      <img src="/logo.PNG" alt="Christ Logo" class="logo-img" />
+      <div class="logo-text">
+        <strong>CHRIST</strong><br>
+        <span>(DEEMED TO BE UNIVERSITY)</span>
+      </div>
+    </div>
+    <nav>
+      <a href="home.html">Home</a>
+    </nav>
+  </header>
+
+  <main class="form-container">
+    <h2>
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135673.png" class="icon" alt="Faculty Icon">
+      Faculty Login
+    </h2>
+
+    <form onsubmit="return handleFacultyLogin(event)">
+      <label for="facultyId">Faculty ID</label>
+      <input type="text" id="facultyId" required />
+
+      <label for="facultyPassword">Password</label>
+      <input type="password" id="facultyPassword" required />
+
+      <button type="submit">Login</button>
+    </form>
+  </main>
+
+  <script>
+    const facultyUsers = {
+      "faculty1": "pass123",
+      "prof": "abcd",
+      "prof.jane": "jane321"
+    };
+
+    function handleFacultyLogin(event) {
+      event.preventDefault();
+
+      const id = document.getElementById("facultyId").value.trim();
+      const pw = document.getElementById("facultyPassword").value;
+
+      if (facultyUsers[id] === pw) {
+        localStorage.setItem("userRole", "faculty");
+        localStorage.setItem("loggedInUser", id);
+        location.href = "facultyDashboard.html";
+      } else {
+        alert("Invalid credentials");
+      }
+
+      return false;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Year Project Portal</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script defer src="script.js"></script>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fade-in');
+  });
+</script>
+
+<body>
+
+  <header>
+    <div class="left-header">
+      <img src="/logo.PNG" alt="Christ Logo" class="logo-img" />
+      <div class="logo-text">
+        <strong>CHRIST</strong><br>
+        <span>(DEEMED TO BE UNIVERSITY)</span>
+      </div>
+    </div>
+    <nav id="main-nav">
+      <a href="studentlogin.html">Student </a>
+      <a href="facultylogin.html">Faculty</a>
+      <a href="home.html">Login</a>
+    </nav>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main class="landing-main">
+    <h1>Welcome to the<br>Final Year Project Portal</h1>
+    <div class="button-group">
+      <button onclick="location.href='studentlogin.html'">Student Login</button>
+      <button onclick="location.href='facultylogin.html'">Faculty Login</button>
+    </div>
+  </main>
+
+</body>
+</html>
